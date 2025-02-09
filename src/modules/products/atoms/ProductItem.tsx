@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { navigate } from '@navigation/NavigationUtil'
 import Icon from '@components/atoms/Icon'
+import { RFValue } from 'react-native-responsive-fontsize'
 const ProductItem = ({ item, is0dd }: any) => {
     return (
         <View style={[styles.productCard, { marginRight: is0dd ? 0 : 10 }]}>
@@ -18,6 +19,22 @@ const ProductItem = ({ item, is0dd }: any) => {
                         </TouchableOpacity>
                     )
                 }
+            </View>
+
+            <View style={{ paddingHorizontal: 10 }} >
+                <Text style={styles.productName} >
+                    {item?.name}
+                </Text>
+                <Text numberOfLines={2} style={styles.productDesc} >
+                    {item?.desc}
+                </Text>
+                <Text style={styles.productPrice} >
+                    <Text style={{ textDecorationLine: "line-through", opacity: 0.6 }} >
+                        ₹{item?.price + 599}
+                    </Text>
+                    {" "}₹{item?.price}
+                </Text>
+
             </View>
         </View>
     )
@@ -49,5 +66,22 @@ const styles = StyleSheet.create({
         elevation: 5,
         zIndex: 1
     },
+    productName: {
+        fontSize: RFValue(10),
+        marginTop: 10,
+    },
+    productDesc: {
+        fontSize: RFValue(9),
+        color: '#555',
+        textAlign: 'left',
+        marginTop: 5,
+    },
+    productPrice: {
+        fontSize: RFValue(10),
+        color: '#000',
+        marginTop: 10,
+        fontWeight: '500',
+    },
 })
+
 export default ProductItem
