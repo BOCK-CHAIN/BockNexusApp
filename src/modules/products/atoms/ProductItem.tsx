@@ -3,6 +3,7 @@ import React from 'react'
 import { navigate } from '@navigation/NavigationUtil'
 import Icon from '@components/atoms/Icon'
 import { RFValue } from 'react-native-responsive-fontsize'
+import UniversalAdd from './UniversalAdd'
 const ProductItem = ({ item, is0dd }: any) => {
     return (
         <View style={[styles.productCard, { marginRight: is0dd ? 0 : 10 }]}>
@@ -26,7 +27,7 @@ const ProductItem = ({ item, is0dd }: any) => {
                     {item?.name}
                 </Text>
                 <Text numberOfLines={2} style={styles.productDesc} >
-                    {item?.desc}
+                    {item?.description}
                 </Text>
                 <Text style={styles.productPrice} >
                     <Text style={{ textDecorationLine: "line-through", opacity: 0.6 }} >
@@ -34,6 +35,17 @@ const ProductItem = ({ item, is0dd }: any) => {
                     </Text>
                     {" "}₹{item?.price}
                 </Text>
+                <View style={styles.flexRow} >
+                    <View style={styles.hotDealContainer} >
+                        <Text style={styles.hotDealText} >
+                            Hot Deal
+                        </Text>
+                    </View>
+
+                    <UniversalAdd item={item} />
+
+
+                </View>
 
             </View>
         </View>
@@ -82,6 +94,25 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontWeight: '500',
     },
+    flexRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    hotDealContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+        marginTop: 10,
+        borderRadius: 4,
+        alignSelf: 'flex-start',
+        backgroundColor: "#E7F9EC"
+    },
+    hotDealText: {
+        color: "#35AB4F",
+        fontSize: RFValue(10),
+        fontWeight: "700"
+    }
 })
 
 export default ProductItem
