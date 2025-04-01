@@ -34,7 +34,10 @@ const MenuHeader: FC<{ scrollY: any }> = ({ scrollY }) => {
             <View style={styles.addressContainer}>
                 <Icon size={16} name='home' iconFamily='Ionicons' />
                 <Text style={styles.homeText}>HOME</Text>
-                <Text numberOfLines={1} style={styles.addressText}></Text>43 High Stack, Noida, San Andreas,C-560047 <Text/>
+                <Text numberOfLines={1} style={styles.addressText}>
+                60ft Road, AECS Layout, Bangalore, C-560037
+                </Text>
+
                 <Icon size={16} name='chevron-forward-sharp' iconFamily='Ionicons' />
             </View>
 

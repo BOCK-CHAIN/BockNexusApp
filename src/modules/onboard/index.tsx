@@ -23,19 +23,34 @@ const Splash: FC = () => {
     )
 }
 
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         backgroundColor: Colors.primary
+//     },
+//     image: {
+//         width: screenWidth * 0.35,
+//         height: screenHeight * 0.35,
+//         resizeMode: 'contain'
+//     }
+// })
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.primary
+        backgroundColor: '#FFFFFF'  // ✅ Set background to white
     },
     image: {
-        width: screenWidth * 0.35,
-        height: screenHeight * 0.35,
+        width: screenWidth * 0.30,   // ✅ Reduce size (previously 0.35)
+        height: screenHeight * 0.30, // ✅ Reduce size (previously 0.35)
         resizeMode: 'contain'
     }
-})
+});
+
 
 export default Splash
 

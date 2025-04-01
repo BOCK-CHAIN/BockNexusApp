@@ -23,4 +23,4 @@ export const homeSlice = createSlice({
 })
 
 export const { setLoading, setData, setError } = homeSlice.actions
-export default homeSlice.reducer
+export default homeSlice.reducer;

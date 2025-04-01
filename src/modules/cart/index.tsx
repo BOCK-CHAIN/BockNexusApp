@@ -7,10 +7,11 @@ import { selectCartItems } from './api/slice'
 import { Colors } from '@utils/Constants'
 import { navigate } from '@navigation/NavigationUtil'
 import OrderItem from './atoms/OrderItem'
+import PlaceOrderButton from './atoms/PlaceOrderButton'
 
 const Cart = () => {
     const carts = useAppSelector(selectCartItems)
-
+    const user = useAppSelector(state => state.account.user) as any
     const renderItem = ({ item }: any) => {
         return <OrderItem item={item} />;
     };
@@ -18,8 +19,9 @@ const Cart = () => {
         <CustomSafeAreaView>
             <View style={styles.container}>
                 <Text style={styles.heading}>My Cart</Text>
-                <Text style={styles.number}> 🗺️ </Text>
-                <Text style={styles.address}>Deliver to: Login first to place your orders </Text>
+                {/* <Text style={styles.number}> 🗺️ </Text> */}
+                <Text style={styles.number}>Deliver to : {user?.phone ? user?.phone : "🗺️"}</Text>
+                <Text style={styles.address}>{user?.address ? user?.address : "Login first to place order"}</Text>
             </View>
 
             {carts.length > 0 ? (
@@ -36,6 +38,10 @@ const Cart = () => {
                         <Text style={styles.shopNowText}> Shop Now</Text>
                     </TouchableOpacity>
                 </View>
+            }
+
+            {carts.length> 0 && 
+                <PlaceOrderButton />
             }
 
         </CustomSafeAreaView>

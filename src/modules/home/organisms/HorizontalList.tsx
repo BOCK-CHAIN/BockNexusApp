@@ -6,7 +6,7 @@ import { navigate } from '@navigation/NavigationUtil'
 
 const HorizontalList: FC<{ data: any }> = ({ data }) => {
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.textStyle}>
                 {data?.title}
             </Text>

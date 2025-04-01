@@ -66,7 +66,7 @@ export const modalStyles = StyleSheet.create({
     },
     button: {
         flex: 1,
-        backgroundColor: '#007BFF',
+        backgroundColor: '#914294',
         paddingVertical: 10,
         marginHorizontal: 5,
         alignItems: 'center',

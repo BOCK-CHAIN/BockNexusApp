@@ -10,7 +10,8 @@ export enum FONTS {
 
 export enum Colors {
   primary = '#FFC201',
-  active = '#1054E8',
+  // active = '#1054E8',
+  active = '#914294',
   inactive = '#666',
   lightText = "#222",
   background = '#fff',

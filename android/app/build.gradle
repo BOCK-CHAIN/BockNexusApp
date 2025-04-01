@@ -106,7 +106,8 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            // minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -132,3 +133,90 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+
+
+// apply plugin: "com.android.application"
+// apply plugin: "org.jetbrains.kotlin.android"
+// apply plugin: "com.facebook.react"
+
+// react {
+//     /* Vector Icons */
+//     project.ext.vectoricons = [ 
+//         iconFontNames: [ 'MaterialCommunityIcons.ttf', 'EvilIcons.ttf', "MaterialIcons.ttf", "Ionicons.ttf", "FontAwesome.ttf", "AntDesign.ttf" ] 
+//     ] 
+//     apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+//     /* Autolinking */
+//     autolinkLibrariesWithApp()
+// }
+
+// /* Proguard Setting */
+// def enableProguardInReleaseBuilds = true  
+
+// /* JSC Flavor */
+// def jscFlavor = 'org.webkit:android-jsc:+'
+
+// android {
+//     ndkVersion rootProject.ext.ndkVersion
+//     buildToolsVersion rootProject.ext.buildToolsVersion
+//     compileSdk rootProject.ext.compileSdkVersion
+
+//     namespace "com.kart"
+//     defaultConfig {
+//         applicationId "com.kart"
+//         minSdkVersion rootProject.ext.minSdkVersion
+//         targetSdkVersion rootProject.ext.targetSdkVersion
+//         versionCode 1
+//         versionName "1.0"
+//         multiDexEnabled true  // Ensure multiDex support for large projects
+//     }
+//     signingConfigs {
+//         debug {
+//             storeFile file('debug.keystore')
+//             storePassword 'android'
+//             keyAlias 'androiddebugkey'
+//             keyPassword 'android'
+//         }
+//         release {
+//             storeFile file('release.keystore')
+//             storePassword 'pragati818'
+//             keyAlias 'my-key-alias'
+//             keyPassword 'pragati818'
+//         }
+//     }
+//     buildTypes {
+//         debug {
+//             signingConfig signingConfigs.debug
+//         }
+//         release {
+//             signingConfig signingConfigs.release
+//             minifyEnabled enableProguardInReleaseBuilds
+//             shrinkResources true  // Reduce APK size
+//             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+//         }
+//     }
+// }
+
+// dependencies {
+//     implementation("com.facebook.react:react-android")
+
+//     implementation project(':gvr_common')
+//     implementation project(':arcore_client')
+//     implementation project(path: ':react_viro')
+//     implementation project(path: ':viro_renderer')
+
+//     implementation 'androidx.media3:media3-exoplayer:1.1.1'
+//     implementation 'androidx.media3:media3-exoplayer-dash:1.1.1'
+//     implementation 'androidx.media3:media3-exoplayer-hls:1.1.1'
+//     implementation 'androidx.media3:media3-exoplayer-smoothstreaming:1.1.1'
+//     implementation 'com.google.protobuf.nano:protobuf-javanano:3.1.0'
+
+//     implementation 'androidx.multidex:multidex:2.0.1'  // Fix for dex issues
+
+//     if (hermesEnabled.toBoolean()) {
+//         implementation("com.facebook.react:hermes-android")
+//     } else {
+//         implementation jscFlavor
+//     }
+// }

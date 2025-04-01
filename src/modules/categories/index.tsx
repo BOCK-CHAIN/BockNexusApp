@@ -5,9 +5,11 @@ import { getCategories } from './api/actions'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { FONTS } from '@utils/Constants'
 import { navigate } from '@navigation/NavigationUtil'
+import { RootState } from '@store/store';
 const Categories: FC = () => {
     const dispatch = useAppDispatch()
     const { data, loading, error } = useAppSelector(state => state.categories)
+    // const { data, loading, error } = useAppSelector((state: RootState) => state.categories as RootState['categories']);
     useEffect(() => {
         dispatch(getCategories())
     }, [])
@@ -37,7 +39,9 @@ const Categories: FC = () => {
                             </TouchableOpacity>
                         )}
                         ListFooterComponent={<>
-                            (error && <Text style={styles.subtitle} >There was an error</Text>)
+                        {error &&
+                            <Text style={styles.subtitle} >There was an error</Text>
+                        }
                         </>}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.contentContainer}

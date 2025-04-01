@@ -17,7 +17,7 @@ const SearchBar = () => {
                 <Pressable onPress={toggleSwitch} style={styles.toggleContainer}> 
                     <Text style={styles.brandText} >Brand Mall</Text>
                     <Image  
-                    source={isOn ? require('@assets/images/switch_on.png') : require('@assets/images/switch_off.png')}
+                    source={isOn ? require('@assets/icons/switch_on.png') : require('@assets/icons/switch_off.png')}
                     style={styles.switchIcon}
                     />
                 </Pressable>
