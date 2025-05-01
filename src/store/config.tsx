@@ -5,4 +5,4 @@ import { Platform } from "react-native"
 // 'http://localhost:3000' 
 //FOR PHYSICAL DEVICE 
 // USE YOUR NETWORK IP OR HOSTED URL 
-export const BASE_URL = 'http://192.168.1.57:3000'
+export const BASE_URL = 'http://34.60.197.27:3000'
