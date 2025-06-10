@@ -5,8 +5,12 @@ rootProject.name = 'kart'
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
 
-include ':react_viro', ':arcore_client', ':gvr_common', ':viro_renderer'
-project(':arcore_client').projectDir = new File('../node_modules/@reactvision/react-viro/android/arcore_client')
-project(':gvr_common').projectDir = new File('../node_modules/@reactvision/react-viro/android/gvr_common')
-project(':viro_renderer').projectDir = new File('../node_modules/@reactvision/react-viro/android/viro_renderer')
-project(':react_viro').projectDir = new File('../node_modules/@reactvision/react-viro/android/react_viro')
+// AR/VR modules removed
+// include ':react_viro'
+// project(':react_viro').projectDir = new File(rootProject.projectDir, '../node_modules/@reactvision/react-viro/android/react_viro')
+// include ':viro_renderer'
+// project(':viro_renderer').projectDir = new File(rootProject.projectDir, '../node_modules/@reactvision/react-viro/android/viro_renderer')
+// include ':gvr_common'
+// project(':gvr_common').projectDir = new File(rootProject.projectDir, '../node_modules/@reactvision/react-viro/android/gvr_common')
+// include ':arcore_client'
+// project(':arcore_client').projectDir = new File(rootProject.projectDir, '../node_modules/@reactvision/react-viro/android/arcore_client')

@@ -4,6 +4,7 @@
     "typeRoots": ["node_modules/@types", "src/types"],
     "types": ["jest"],
     "baseUrl": "./",
+    "jsx": "react-native",
     "paths": {
       "@assets/*": ["src/assets/*"],
       "@modules/*": ["src/modules/*"],

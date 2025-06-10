@@ -7,7 +7,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import Icon from "@components/atoms/Icon";
 
 const UniversalAdd:FC<{item: any}> = ({item}) => {
-    const count = useAppSelector(selectItemCountById(item._id));
+    const count = useAppSelector(selectItemCountById(item.id));
     const dispatch = useAppDispatch();
     return (
         <View style={[styles.container,{backgroundColor:count === 0 ? '#fff':Colors.active}]}>

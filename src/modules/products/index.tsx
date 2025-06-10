@@ -38,7 +38,7 @@ const Products: FC = () => {
                 bounces={false}
                 data={products}
                 renderItem={renderitem}
-                keyExtractor={(item) => item._id.toString()}
+                keyExtractor={(item) => item.id.toString()}
                 numColumns={2}
                 ListEmptyComponent={ 
                     <View style={styles.emptyContainer}> 

@@ -23,8 +23,8 @@ target 'kart' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  pod 'ViroReact', :path => '../node_modules/@reactvision/react-viro/ios/'
-  pod 'Virokit', :path => '../node_modules/@reactvision/react-viro/ios/dist/ViroRenderer/'
+  # pod 'ViroReact', :path => '../node_modules/@reactvision/react-viro/ios/'
+  # pod 'Virokit', :path => '../node_modules/@reactvision/react-viro/ios/dist/ViroRenderer/'
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202

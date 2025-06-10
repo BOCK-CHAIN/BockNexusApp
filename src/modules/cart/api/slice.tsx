@@ -2,7 +2,7 @@ import { createSelector,createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@store/store";
 
 interface CartItem {
-    _id : string;
+    id : string;
     name : string;
     price : number;
     quantity: number;
@@ -27,7 +27,7 @@ export const cartSlice = createSlice({
         },
         addItem:(state,action:PayloadAction<CartItem>)=>{
             const newItem = action.payload
-            const existingItem = state.items.find(item=>item._id===newItem._id)
+            const existingItem = state.items.find(item=>item.id===newItem.id)
             if(existingItem){
                 existingItem.quantity += 1
                 existingItem.totalPrice += newItem.price * existingItem.quantity
@@ -41,13 +41,13 @@ export const cartSlice = createSlice({
         },
         removeItem:(state,action:PayloadAction<CartItem>)=>{
             const newItem = action.payload;
-            const existingItem = state.items.find(item=> item._id === newItem._id)
+            const existingItem = state.items.find(item=> item.id === newItem.id)
             if (existingItem){
                 if(existingItem.quantity > 1){
                     existingItem.quantity -= 1;
                     existingItem.totalPrice -= existingItem.price
                 }else{
-                    state.items = state.items.filter(item=> item._id != newItem._id)
+                    state.items = state.items.filter(item=> item.id != newItem.id)
                 }
             }
         }
@@ -59,7 +59,7 @@ export const selectCartItems = (state: RootState) => state.cart.items;
 
 export const selectItemCountById = (id: string) => 
     createSelector(selectCartItems, (items) => {
-        const item = items.find((item: any) => item._id === id)
+        const item = items.find((item: any) => item.id === id)
         return item ? item?.quantity : 0
     })
 

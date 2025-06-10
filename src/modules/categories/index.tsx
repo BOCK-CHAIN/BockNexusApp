@@ -17,7 +17,7 @@ const Categories: FC = () => {
         <View style={styles.container} >
             <View style={styles.headerContainer}>
                 <SafeAreaView />
-                <Text style={styles.title}>Categories</Text>
+                <Text style={styles.title}>Categories </Text>
                 <Text style={styles.subtitle}>Explore our wide range of categories </Text>
             </View>
             {
@@ -26,12 +26,12 @@ const Categories: FC = () => {
                     <FlatList
                         data={data}
                         numColumns={2}
-                        keyExtractor={(item) => item._id.toString()}
+                        keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
                             <TouchableOpacity style={styles.itemContainer}
                             onPress={() => navigate('Products', {
-                                id:item._id,
-                                name:item.name             
+                                id: item.id,
+                                name: item.name             
                             })}
                             >
                                 <Image source={{ uri: item?.image_uri }} style={styles.image} />
