@@ -3,12 +3,12 @@ import React, { FC } from 'react'
 import UniversalAdd from '@modules/products/atoms/UniversalAdd'
 import { RFValue } from 'react-native-responsive-fontsize'
 
-const OrderItem:FC <{item:any}> = ({item}) => {
+const OrderItem:FC <{item:any, onUpdate?: () => void}> = ({item, onUpdate}) => {
     return (
         <View style={styles.flexRow}>
             <View style={styles.imageContainer}>
                 <Image source={{uri: item?.image_uri}} style={styles.img} /> 
-                <UniversalAdd item={item} />
+                <UniversalAdd item={item} onUpdate={onUpdate} />
             </View>
 
             <View style={styles.itemContainer}>
