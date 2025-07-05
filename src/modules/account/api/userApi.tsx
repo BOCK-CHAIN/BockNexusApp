@@ -1,12 +1,12 @@
 import { BASE_URL } from '@store/config';
 
 export interface LoginData {
-  email: string;
+  username: string;
   password: string;
 }
 
 export interface RegisterData {
-  name: string;
+  username: string;
   email: string;
   password: string;
   phone?: string;
@@ -15,12 +15,13 @@ export interface RegisterData {
 
 export interface User {
   id: number;
-  name: string;
+  username: string;
+  name?: string;
   email: string;
   phone?: string;
   address?: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface AuthResponse {
