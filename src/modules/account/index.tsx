@@ -66,11 +66,11 @@ const Account: FC = () => {
             <View style={styles.userInfo}>
               <View style={styles.avatar}>
                 <Text style={styles.avatarText}>
-                  {user.username.charAt(0).toUpperCase()}
+                  {user.name.charAt(0).toUpperCase()}
                 </Text>
               </View>
               <View style={styles.userDetails}>
-                <Text style={styles.userName}>{user.username}</Text>
+                <Text style={styles.userName}>{user.name}</Text>
                 <Text style={styles.userEmail}>{user.email}</Text>
                 {user.phone && (
                   <Text style={styles.userPhone}>{user.phone}</Text>
