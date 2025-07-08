@@ -57,8 +57,13 @@ const Order = () => {
                 <Text style={styles.heading}> Your Orders: </Text>
             </View>
 
-            <ScrollView>
-                {orders.map((order) => {
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            {orders.length === 0 ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 500 }}> You have no orders yet! </Text>
+                </View>
+            ) : (
+                orders.map((order) => {
                     const dateObj = new Date(order.deliveryDate);
                     const day = dateObj.getDate();
                     const month = dateObj.toLocaleDateString('en-US', { month: 'long' });
@@ -101,7 +106,8 @@ const Order = () => {
                             </View>
                         </TouchableOpacity>
                     );
-                })}
+                })
+            )}
             </ScrollView>
         </View>
     );

@@ -105,7 +105,7 @@ const OrderDetails = ({ route }) => {
                 <View style={{ width: '100%', backgroundColor: '#ddd', marginBottom: 2, marginTop: 4}}>
                     <Text style={{ marginLeft: 6, fontSize: 22, fontWeight: 500 }}> Contact Details: </Text>
                     <Text style={{ marginLeft: 6, fontSize: 15 }}> You will be contacted on {order.user.phone}. </Text>
-                    <Text style={{ marginLeft: 6, fontSize: 15 }}> It will be delivered to {order.address.line1}. </Text>
+                    <Text style={{ marginLeft: 6, fontSize: 15 }}> It will be delivered to {order.Address.line1}. </Text>
                 </View>
 
 

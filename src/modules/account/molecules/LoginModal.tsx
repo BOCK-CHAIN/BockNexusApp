@@ -26,11 +26,10 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
   
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState<LoginData & RegisterData>({
-    name: '',
+    username: '',
     email: '',
     password: '',
     phone: '',
-    address: '',
   });
 
   const handleSubmit = async () => {
