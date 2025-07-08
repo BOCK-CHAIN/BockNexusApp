@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Colors } from '@utils/Constants'
 import Home from '@modules/home'
 import Categories from '@modules/categories'
-import Account from '@modules/account'
+import AccountNavigator from '../modules/account/accountNavigator'
 import Cart from '@modules/cart'
 import { AccountIcon, CartIcon, CategoriesIcon, HomeIcon } from './TabIcons'
 import { useAppSelector } from '@store/reduxHook'
@@ -49,7 +49,7 @@ const MainNavigator: FC = () => {
             />
             <Tab.Screen
                 name='Account'
-                component={Account}
+                component={AccountNavigator}
                 options={{
                     tabBarIcon:({focused, color, size}) => (
                         <AccountIcon focused= {focused} color = {color} size= {size} />
