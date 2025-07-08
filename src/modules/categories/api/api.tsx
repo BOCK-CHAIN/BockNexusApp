@@ -154,11 +154,11 @@ export const fetchCategoriesData = async (): Promise<Category[]> => {
             throw new Error('No data received from server');
         }
         
-        if (!response.data.categories) {
+        if (!Array.isArray(response.data.data)) {
             throw new Error('Categories data not found in response');
         }
         
-        return response.data.categories;
+        return response.data.data;
     } catch (error) {
         console.log('API Error:', error);
         console.log('Using mock data instead');

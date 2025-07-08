@@ -32,32 +32,32 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
     phone: '',
     address: '',
   });
+  const [formError, setFormError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
-    if (!formData.email || !formData.password) {
-      Alert.alert('Error', 'Please fill in all required fields');
-      return;
+    setFormError(null);
+    if (isLogin) {
+      if (!formData.username || !formData.password) {
+        setFormError('Please enter both username and password.');
+        return;
+      }
+    } else {
+      if (!formData.username || !formData.email || !formData.password) {
+        setFormError('Please enter username, email, and password.');
+        return;
+      }
     }
-
-    if (!isLogin && !formData.name) {
-      Alert.alert('Error', 'Please enter your name');
-      return;
-    }
-
     try {
       dispatch(setLoading(true));
-
       if (isLogin) {
         const response = await loginUser({
-          email: formData.email,
+          username: formData.username,
           password: formData.password,
         });
-        
         dispatch(setAuthData({
           user: response.data.user,
           token: response.data.token,
         }));
-        
         Alert.alert('Success', 'Login successful!');
         onClose();
       } else {
@@ -67,18 +67,16 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
           password: formData.password,
           phone: formData.phone,
         });
-        
         dispatch(setAuthData({
           user: response.data.user,
           token: response.data.token,
         }));
-        
         Alert.alert('Success', 'Registration successful!');
         onClose();
       }
     } catch (error: any) {
       dispatch(setError(error.message));
-      Alert.alert('Error', error.message);
+      setFormError(error.message);
     }
   };
 
@@ -102,23 +100,24 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
             </TouchableOpacity>
           </View>
 
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            value={formData.username}
+            onChangeText={(text) => setFormData({ ...formData, username: text })}
+            autoCapitalize="none"
+          />
+
           {!isLogin && (
             <TextInput
               style={styles.input}
-              placeholder="Full Name"
-              value={formData.name}
-              onChangeText={(text) => setFormData({ ...formData, name: text })}
+              placeholder="Email"
+              value={formData.email}
+              onChangeText={(text) => setFormData({ ...formData, email: text })}
+              keyboardType="email-address"
+              autoCapitalize="none"
             />
           )}
-
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={formData.email}
-            onChangeText={(text) => setFormData({ ...formData, email: text })}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
 
           <TextInput
             style={styles.input}
@@ -138,6 +137,10 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
                 keyboardType="phone-pad"
               />
             </>
+          )}
+
+          {formError && (
+            <Text style={{ color: 'red', marginBottom: 8, textAlign: 'center' }}>{formError}</Text>
           )}
 
           <TouchableOpacity
