@@ -14,11 +14,13 @@ import { useAppDispatch, useAppSelector } from '@store/reduxHook';
 import { logout } from './api/slice';
 import LoginModal from './molecules/LoginModal';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const Account: FC = () => {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated, loading } = useAppSelector((state) => state.auth);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const navigation = useNavigation();
 
   const handleLogout = () => {
     Alert.alert(
@@ -79,13 +81,13 @@ const Account: FC = () => {
             </View>
 
             <View style={styles.menuSection}>
-              <TouchableOpacity style={styles.menuItem}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account',{ screen: 'EditProfile' })}>
                 <Icon name="person" size={24} color="#333" />
                 <Text style={styles.menuText}>Edit Profile</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.menuItem}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account',{ screen: 'Orders' })}>
                 <Icon name="shopping-cart" size={24} color="#333" />
                 <Text style={styles.menuText}>My Orders</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
@@ -97,7 +99,7 @@ const Account: FC = () => {
                 <Icon name="chevron-right" size={24} color="#666" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.menuItem}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account', { screen: 'Addresses' })}>
                 <Icon name="location-on" size={24} color="#333" />
                 <Text style={styles.menuText}>Addresses</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
@@ -262,6 +264,7 @@ const styles = StyleSheet.create({
     color: '#333',
     marginTop: 20,
     marginBottom: 10,
+    textAlign: 'center'
   },
   loginSubtitle: {
     fontSize: RFValue(14),

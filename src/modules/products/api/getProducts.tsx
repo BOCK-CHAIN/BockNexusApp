@@ -123,8 +123,8 @@ const mockElectronicsProducts = [
 
 export const getProductsByCategory = async (id: string) => {
     try {
-        const res = await axios.get(`${BASE_URL}/product/${id}`)
-        return res.data.products
+        const res = await axios.get(`${BASE_URL}/product/category/${id}`)
+        return res.data.data
     } catch (error) {
         console.log('API failed, using mock products for category:', id);
         

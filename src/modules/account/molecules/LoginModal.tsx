@@ -62,11 +62,10 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
         onClose();
       } else {
         const response = await registerUser({
-          name: formData.name,
+          username: formData.name,
           email: formData.email,
           password: formData.password,
           phone: formData.phone,
-          address: formData.address,
         });
         
         dispatch(setAuthData({
@@ -89,7 +88,6 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
       email: '',
       password: '',
       phone: '',
-      address: '',
     });
   };
 
@@ -138,15 +136,6 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
                 value={formData.phone}
                 onChangeText={(text) => setFormData({ ...formData, phone: text })}
                 keyboardType="phone-pad"
-              />
-
-              <TextInput
-                style={styles.input}
-                placeholder="Address (optional)"
-                value={formData.address}
-                onChangeText={(text) => setFormData({ ...formData, address: text })}
-                multiline
-                numberOfLines={2}
               />
             </>
           )}
