@@ -77,10 +77,10 @@ const DeleteAccount = () => {
                         <Image
                             source={
                                 isPasswordVisible ?
-                                require('../../../assets/images/visible.jpg') :
-                                require('../../../assets/images/notvisible.jpg')
+                                require('../../../assets/images/notvisible.jpg') :
+                                require('../../../assets/images/visible.jpg')
                             }
-                            style={{ height: 15, width: 30, marginRight: 5 }}
+                            style={{ height: 12, width: 24, marginRight: 5 }}
                         />
                         </TouchableOpacity>
                     </View>

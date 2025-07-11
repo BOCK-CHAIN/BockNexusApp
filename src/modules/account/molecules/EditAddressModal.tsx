@@ -23,6 +23,8 @@ const EditAddressModal = ({
   setType,
   isDefault,
   setIsDefault,
+  name,
+  setName,
   handleUpdate,
   styles
 }) => {
@@ -35,6 +37,11 @@ const EditAddressModal = ({
                         <TouchableOpacity onPress={() => setVisible(false)} style={{ paddingRight: 10 }}>
                             <Image source={require('../../../assets/images/cross.png')} style={{ height: 25, width: 25 }} />
                         </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.inputBox}>
+                        <Text style={styles.inputHeading}> Receiver's Name: </Text>
+                        <TextInput placeholder="Enter Receiver's name" value={name} onChangeText={setName} style={styles.input} />
                     </View>
 
                     <View style={styles.inputBox}>

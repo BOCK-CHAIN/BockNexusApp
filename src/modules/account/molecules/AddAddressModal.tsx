@@ -22,6 +22,8 @@ const AddAddressModal = ({
   setType,
   isDefault,
   setIsDefault,
+  name,
+  setName,
   handleAdd,
   styles
 }) => {
@@ -34,6 +36,11 @@ const AddAddressModal = ({
                         <TouchableOpacity onPress={() => setVisible(false)} style={{ paddingRight: 10 }}>
                             <Image source={require('../../../assets/images/cross.png')} style={{ height: 25, width: 25 }} />
                         </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.inputBox}>
+                        <Text style={styles.inputHeading}> Receiver's name: </Text>
+                        <TextInput placeholder="Enter Receiver's Name" onChangeText={setName} value={name} style={styles.input} />
                     </View>
 
                     <View style={styles.inputBox}>

@@ -23,7 +23,8 @@ interface LoginModalProps {
 const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.auth);
-  
+
+  const[repeatedPassword, setRepeatedPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState<LoginData & RegisterData>({
     username: '',
@@ -41,6 +42,12 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
     if (!isLogin && !formData.name) {
       Alert.alert('Error', 'Please enter your name');
       return;
+    }
+
+    if (!isLogin && (formData.password !== repeatedPassword)){
+        Alert.alert('Error', 'Please enter the same password.');
+        setRepeatedPassword('');
+        return;
     }
 
     try {
@@ -104,7 +111,7 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
           {!isLogin && (
             <TextInput
               style={styles.input}
-              placeholder="Full Name"
+              placeholder="Username"
               value={formData.name}
               onChangeText={(text) => setFormData({ ...formData, name: text })}
             />
@@ -119,6 +126,20 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
             autoCapitalize="none"
           />
 
+          {!isLogin && (
+            <>
+              <TextInput
+                style={styles.input}
+                placeholder="Phone (optional)"
+                value={formData.phone}
+                onChangeText={(text) => setFormData({ ...formData, phone: text })}
+                keyboardType="phone-pad"
+              />
+            </>
+          )}
+
+          {!isLogin ? <Text style={styles.subTitle}> Set Password </Text> : null}
+
           <TextInput
             style={styles.input}
             placeholder="Password"
@@ -131,10 +152,10 @@ const LoginModal: FC<LoginModalProps> = ({ visible, onClose }) => {
             <>
               <TextInput
                 style={styles.input}
-                placeholder="Phone (optional)"
-                value={formData.phone}
-                onChangeText={(text) => setFormData({ ...formData, phone: text })}
-                keyboardType="phone-pad"
+                placeholder="Repeat Password"
+                onChangeText={setRepeatedPassword}
+                value={repeatedPassword}
+                secureTextEntry
               />
             </>
           )}
@@ -196,6 +217,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  subTitle: {
+    fontSize: RFValue(16),
+    fontFamily: FONTS.heading,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
   closeButton: {
     fontSize: RFValue(24),
     color: '#666',
@@ -207,7 +235,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
   },
   submitButton: {
     backgroundColor: '#2E7D32',

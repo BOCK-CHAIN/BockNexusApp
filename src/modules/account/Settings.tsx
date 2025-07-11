@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         height: '13%',
         backgroundColor: 'white',
         borderBottomWidth: 1,
+        borderColor: '#914294'
     },
     text: {
         fontSize: 20,

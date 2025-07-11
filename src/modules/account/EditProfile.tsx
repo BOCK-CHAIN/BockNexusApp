@@ -26,6 +26,7 @@ const EditProfile = () => {
     const handleUpdateUsername = async () => {
         try {
             await updateUserProfile(token, { username });
+            dispatch(updateUser({ ...user, username }));
             Alert.alert('Success', 'Username updated');
         }catch(err){
             Alert.alert('Error', err.message || 'Failed to update username');
@@ -35,6 +36,7 @@ const EditProfile = () => {
     const handleUpdateEmail = async () => {
         try {
             await updateUserProfile(token, { email });
+            dispatch(updateUser({ ...user, email }));
             Alert.alert('Success', 'Email updated.');
         }catch(err){
             Alert.alert('Error', err.message || 'Failed to update email.');
@@ -44,7 +46,9 @@ const EditProfile = () => {
     const handleUpdateNumber = async () => {
         try{
             await updateUserProfile(token, { phone });
+            dispatch(updateUser({ ...user, phone }));
             Alert.alert('Success', 'Phone number updated.');
+
         }catch(err){
             Alert.alert('Error', err.message || 'Failed to update number.');
         }
@@ -64,73 +68,77 @@ const EditProfile = () => {
     return(
         <>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.container}>
-                    <Text style={styles.heading}> Edit details: </Text>
-                    <View style={styles.individual}>
-                        <View style={styles.inputs}>
-                            <TextInput
-                            style={styles.input}
-                            value = {username}
-                            placeholder='Username'
-                            onChangeText = {setUsername}
-                            />
-                            <TouchableOpacity style={styles.button} onPress={handleUpdateUsername}>
-                                <Text style={styles.buttonText}> UPDATE </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.individual}>
-                        <View style={styles.inputs}>
-                            <TextInput
+                <View style={styles.shadowBox}>
+                    <View style={styles.boxContent}>
+                        <Text style={styles.heading}> Edit details: </Text>
+                        <View style={styles.individual}>
+                            <View style={styles.inputs}>
+                                <TextInput
                                 style={styles.input}
-                                value = {email}
-                                placeholder='Email'
-                                onChangeText = {setEmail}
-                            />
-                            <TouchableOpacity style={styles.button} onPress={handleUpdateEmail}>
-                                <Text style={styles.buttonText}> UPDATE </Text>
-                            </TouchableOpacity>
+                                value = {username}
+                                placeholder='Username'
+                                onChangeText = {setUsername}
+                                />
+                                <TouchableOpacity style={styles.button} onPress={handleUpdateUsername}>
+                                    <Text style={styles.buttonText}> UPDATE </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.individual}>
-                        <View style={styles.inputs}>
-                            <TextInput
-                                style={styles.input}
-                                value = {phone}
-                                placeholder='Phone Number'
-                                onChangeText = {setPhone}
-                            />
-                            <TouchableOpacity style={styles.button} onPress={handleUpdateNumber}>
-                                <Text style={styles.buttonText}> UPDATE </Text>
-                            </TouchableOpacity>
+                        <View style={styles.individual}>
+                            <View style={styles.inputs}>
+                                <TextInput
+                                    style={styles.input}
+                                    value = {email}
+                                    placeholder='Email'
+                                    onChangeText = {setEmail}
+                                />
+                                <TouchableOpacity style={styles.button} onPress={handleUpdateEmail}>
+                                    <Text style={styles.buttonText}> UPDATE </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={styles.individual}>
+                            <View style={styles.inputs}>
+                                <TextInput
+                                    style={styles.input}
+                                    value = {phone}
+                                    placeholder='Phone Number'
+                                    onChangeText = {setPhone}
+                                />
+                                <TouchableOpacity style={styles.button} onPress={handleUpdateNumber}>
+                                    <Text style={styles.buttonText}> UPDATE </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </View>
 
-                <View style={styles.container}>
-                    <Text style={styles.heading}> Change Password: </Text>
-                    <View style={styles.individual}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Old Password'
-                            secureTextEntry
-                            value={oldPassword}
-                            onChangeText = {setOldPassword}
-                        />
-                    </View>
-                    <View style={styles.individual}>
-                        <TextInput
-                            style={styles.input}
-                            secureTextEntry
-                            placeholder='New Password'
-                            value = {newPassword}
-                            onChangeText = {setNewPassword}
-                        />
-                    </View>
-                    <View style={{ paddingLeft:30, paddingTop: 28, width: '35%' }}>
-                        <TouchableOpacity style={styles.button} onPress={handleUpdatePassword}>
-                            <Text style={styles.buttonText}> UPDATE </Text>
-                        </TouchableOpacity>
+                <View style={styles.shadowBox}>
+                    <View style={styles.boxContent}>
+                        <Text style={styles.heading}> Change Password: </Text>
+                        <View style={styles.individual}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Old Password'
+                                secureTextEntry
+                                value={oldPassword}
+                                onChangeText = {setOldPassword}
+                            />
+                        </View>
+                        <View style={styles.individual}>
+                            <TextInput
+                                style={styles.input}
+                                secureTextEntry
+                                placeholder='New Password'
+                                value = {newPassword}
+                                onChangeText = {setNewPassword}
+                            />
+                        </View>
+                        <View style={{ paddingLeft: 10, paddingTop: 16, width: '35%' }}>
+                            <TouchableOpacity style={styles.button} onPress={handleUpdatePassword}>
+                                <Text style={styles.buttonText}> UPDATE </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </ScrollView>
@@ -142,12 +150,28 @@ const styles = StyleSheet.create({
     scrollContainer: {
         paddingBottom: 50,
     },
-    container: {
-        paddingBottom: 50,
+    shadowBox: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        marginHorizontal: 14,
+        marginTop: 15,
+        marginBottom: 10,
+        borderWidth: 2,
+        borderColor: '#914294',
+        // Android shadow
+        elevation: 5,
+        // iOS shadow
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+    },
+    boxContent: {
+        padding: 15,
+        borderRadius: 10,
+        overflow: 'hidden',
     },
     heading: {
-      marginLeft: 15,
-      marginTop: 15,
       fontSize: 25,
       fontWeight: 700
     },
@@ -158,7 +182,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     individual: {
-        marginLeft: 30,
+        marginLeft: 10,
         marginTop: 15,
         width: '85%'
     },
@@ -166,8 +190,9 @@ const styles = StyleSheet.create({
         width: '80%',
         marginRight: 15,
         fontSize: 20,
-        borderBottomWidth: 2,
-        borderBottomColor: 'black'
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#914294'
     },
     button: {
         backgroundColor: '#5783db',

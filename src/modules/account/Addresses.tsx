@@ -22,6 +22,7 @@ const Addresses = () => {
     const [zip, setZip] = useState('');
     const [country, setCountry] = useState('');
     const [type, setType] = useState('');
+    const [name, setName] = useState('');
     const [isDefault, setIsDefault] = useState(false);
 
     const fetchAddress = async () => {
@@ -48,7 +49,8 @@ const Addresses = () => {
             zip,
             country,
             isDefault,
-            type
+            receiverName: name,
+            type,
         };
 
         try{
@@ -75,6 +77,7 @@ const Addresses = () => {
             setZip('');
             setCountry('');
             setType('');
+            setName('');
             setIsDefault(false);
             setAddVisible(false);
             fetchAddress();
@@ -123,7 +126,8 @@ const Addresses = () => {
             zip,
             country,
             isDefault,
-            type
+            receiverName: name,
+            type,
         }
 
         try{
@@ -137,6 +141,7 @@ const Addresses = () => {
             setZip('');
             setCountry('');
             setType('');
+            setName('');
             setIsDefault(false);
             fetchAddress();
             Toast.show({
@@ -194,6 +199,8 @@ const Addresses = () => {
                         setType={setType}
                         isDefault={isDefault}
                         setIsDefault={setIsDefault}
+                        name={name}
+                        setName={setName}
                         handleAdd={handleAdd}
                         styles={styles}
                     />
@@ -229,6 +236,7 @@ const Addresses = () => {
                                     />
                                 </View>
                                 <View style={{ marginTop: 10 }}>
+                                    <Text style={[styles.info, { fontSize:18 }]}> {address.receiverName} </Text>
                                     <Text style={styles.info}> {address.line1}, </Text>
                                     {address.line2 && (
                                         <Text style={styles.info}> {address.line2}, </Text>
@@ -246,7 +254,8 @@ const Addresses = () => {
                                           setZip(address.zip);
                                           setCountry(address.country);
                                           setType(address.type);
-                                          setIsDefault(address.isDefault)
+                                          setIsDefault(address.isDefault);
+                                          setName(address.receiverName);
                                           setVisible(true);
                                         }}>
                                             <Text style={{ fontSize: 30 }}> ... </Text>
@@ -274,6 +283,8 @@ const Addresses = () => {
                                             setType={setType}
                                             isDefault={isDefault}
                                             setIsDefault={setIsDefault}
+                                            name={name}
+                                            setName={setName}
                                             handleUpdate={handleUpdate}
                                             styles={styles}
                                         />
@@ -337,7 +348,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     modalContainer: {
-        height: '75%',
+        height: '82%',
         width: '80%',
         backgroundColor: 'white',
         borderWidth: 3,
