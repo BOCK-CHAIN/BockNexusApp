@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Alert,
+  Image
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { FONTS } from '@utils/Constants';
@@ -55,13 +56,8 @@ const Account: FC = () => {
   return (
     <View style={styles.container}>
       <SafeAreaView />
-      
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Account</Text>
-      </View>
 
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         {isAuthenticated && user ? (
           // Logged in user view
           <View style={styles.userSection}>
@@ -93,7 +89,7 @@ const Account: FC = () => {
                 <Icon name="chevron-right" size={24} color="#666" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.menuItem}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account', { screen: 'Wishlist' })}>
                 <Icon name="favorite" size={24} color="#333" />
                 <Text style={styles.menuText}>Wishlist</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
@@ -105,7 +101,7 @@ const Account: FC = () => {
                 <Icon name="chevron-right" size={24} color="#666" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.menuItem}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('SettingsStack')}>
                 <Icon name="settings" size={24} color="#333" />
                 <Text style={styles.menuText}>Settings</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
@@ -121,10 +117,13 @@ const Account: FC = () => {
           // Not logged in view
           <View style={styles.loginSection}>
             <View style={styles.loginContent}>
-              <Icon name="account-circle" size={80} color="#ccc" />
+              <Image
+                source={require('../../assets/images/R.png')}
+                style={{ height: 100, width: 100 }}
+              />
               <Text style={styles.loginTitle}>Welcome to BockNexus</Text>
               <Text style={styles.loginSubtitle}>
-                Login to access your account and manage your orders
+                Login/Register to access your account and manage your orders
               </Text>
               
               <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>

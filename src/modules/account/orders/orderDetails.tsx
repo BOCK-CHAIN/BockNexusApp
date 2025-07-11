@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import { getRandomProduct } from './api/userApi';
+import { getRandomProduct } from '../api/productApi';
 
 const OrderDetails = ({ route }) => {
     const { order } = route.params;

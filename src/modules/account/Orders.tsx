@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator } from 'react-native';
-import { getUserOrders } from './api/userApi'
+import { getUserOrders } from './api/orderApi'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
 
@@ -38,7 +38,7 @@ const Order = () => {
 
     return(
         <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
-            <View>
+            <View style={[styles.header, { marginBottom: 2 }]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TextInput
                         placeholder='🔍 Search for your order'
@@ -116,7 +116,7 @@ const Order = () => {
 const styles = StyleSheet.create({
     heading: {
         marginLeft: 10,
-        marginTop: 10,
+        marginTop: 8,
         fontSize: 26,
         fontWeight: '700',
         fontFamily: 'Tinos-Bold',
@@ -162,7 +162,11 @@ const styles = StyleSheet.create({
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#fff',
-      },
+    },
+    header: {
+        borderBottomWidth: 2,
+        borderColor: '#914294',
+    }
 });
 
 export default Order;

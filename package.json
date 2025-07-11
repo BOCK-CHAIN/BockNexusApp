@@ -14,6 +14,7 @@
     "create-apk": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.1.0",
     "@homielab/react-native-auto-scroll": "^0.0.10",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
@@ -36,6 +37,7 @@
     "react-native-screens": "^4.6.0",
     "react-native-svg": "^15.11.1",
     "react-native-svg-transformer": "^1.5.0",
+    "react-native-toast-message": "^2.3.3",
     "react-native-vector-icons": "^10.2.0",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",

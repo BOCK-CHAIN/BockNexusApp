@@ -132,72 +132,26 @@ export const changePassword = async (token: string, currentPassword: string, new
   return response.json();
 };
 
-// Get User's Orders
-export const getUserOrders = async (token) => {
+// Delete User
+export const deleteUser = async (token, password) => {
     try{
-        const response = await fetch(`${BASE_URL}/orders/my-orders`,{
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
-        });
-
-        if(!response.ok){
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to fetch orders');
-        }
-
-        const data = await response.json();
-        return data.orders;
-    }catch(err){
-        console.error('Fetch orders error: ', err);
-        throw err;
-    }
-};
-
-// Get Random Products
-export const getRandomProduct = async () => {
-    try{
-        const res = await fetch(`http://10.0.2.2:3000/product/random-products`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        const json = await res.json();
-
-        if(json.success){
-            return json.data;
-        }else{
-            throw new Error(json.message || 'Failed to fetch products')
-        }
-    }catch(err){
-        console.error('Fetching random products error', err);
-        throw err;
-    }
-};
-
-// Get User's Addresses
-export const getUserAddress = async (id: string, token) => {
-    try{
-        console.log('Token:', token);
-        const res = await fetch(`http://10.0.2.2:3000/address/${id}`, {
-            method: 'GET',
+        const res = await fetch(`http://10.0.2.2:3000/user/delete`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            body: JSON.stringify({password})
         });
 
-        if(!res.ok){
-            throw new Error('Failed to fetch addresses');
-        }
+        const data = await res.json();
+        return data;
 
-        const result = await res.json();
-        return result.addresses;
-
-    }catch(err){
-        console.error("Failed to fetch addresses: ", err);
-        return [];
+    }catch(error){
+        console.error('Failed to delete user: ', error);
+        return {
+            success: false,
+            error: error.message
+        };
     }
 };
