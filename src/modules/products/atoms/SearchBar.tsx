@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Pressable, TextInput, Image } from 'react-native'
 import React, { FC } from 'react'
 import Icon from '@components/atoms/Icon';
 import { goBack, navigate } from '@navigation/NavigationUtil';
@@ -23,7 +23,10 @@ const SearchBar: FC<SearchBarProps> = ({ cartLength }) => {
             </View>
             <Icon size={24} name='heart-outline' iconFamily='Ionicons' color='#000' />
             <Pressable onPress={()=>navigate('Cart')} >
-                <Icon size={24} name='heart-outline' iconFamily='Ionicons' color='#000' />
+                <Image
+                    source={require('../../../assets/images/cart.png')}
+                    style={{ width: 20, height: 20, marginLeft: 5 }}
+                />
                 {
                     cartLength > 0 &&
                     <View style={styles.badge}>

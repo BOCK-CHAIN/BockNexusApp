@@ -6,11 +6,13 @@ import { RFValue } from "react-native-responsive-fontsize";
 import Icon from "@components/atoms/Icon";
 import { addToCart, removeFromCart, getUserCart } from "@modules/cart/api/api";
 import { navigate } from "@navigation/NavigationUtil";
+import { useNavigation } from '@react-navigation/native';
 
-const UniversalAdd:FC<{item: any, onUpdate?: () => void}> = ({item, onUpdate}) => {
+const ProductAdd:FC<{item: any, onUpdate?: () => void}> = ({item, onUpdate}) => {
     const { isAuthenticated, token } = useAppSelector(state => state.auth);
     const [count, setCount] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
+    const navigation = useNavigation();
 
     const fetchCartCount = async () => {
         if (!isAuthenticated || !token) {
@@ -39,7 +41,7 @@ const UniversalAdd:FC<{item: any, onUpdate?: () => void}> = ({item, onUpdate}) =
                 'Please login to add items to cart',
                 [
                     { text: 'Cancel', style: 'cancel' },
-                    { text: 'Login', onPress: () => navigate('Account') }
+                    { text: 'Login', onPress: () => {navigation.navigate('Account', { screen: 'Account Home' });}}
                 ]
             );
             return;
@@ -84,8 +86,8 @@ const UniversalAdd:FC<{item: any, onUpdate?: () => void}> = ({item, onUpdate}) =
     return (
         <View style={[styles.container,{backgroundColor:count === 0 ? '#fff':Colors.active}]}>
             {count === 0? (
-                <TouchableOpacity 
-                    onPress={handleAdd} 
+                <TouchableOpacity
+                    onPress={handleAdd}
                     style={styles.add}
                     disabled={loading}
                 >
@@ -93,13 +95,13 @@ const UniversalAdd:FC<{item: any, onUpdate?: () => void}> = ({item, onUpdate}) =
                 </TouchableOpacity>
             ):(
                 <View style = {styles.counterContainer}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         onPress={handleRemove}
                     >
                         <Icon color='#fff' name='minus' iconFamily="MaterialCommunityIcons" size={RFValue(14)} />
                     </TouchableOpacity>
                     <Text style={styles.text}>{count}</Text>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         onPress={handleAdd}
                     >
                         <Icon color='#fff' name='plus' iconFamily="MaterialCommunityIcons" size={RFValue(14)} />
@@ -144,4 +146,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default UniversalAdd;
+export default ProductAdd;

@@ -1,29 +1,42 @@
 import { BASE_URL } from '@store/config';
 
-export interface CartItem {
-  id: number;
-  productId: number;
-  productSizeId: number;
-  quantity: number;
-  product: {
-    id: number;
-    name: string;
-    price: number;
-    image_uri: string;
-  };
-  productSize: {
-    id: number;
-    size: string;
-  };
+interface Product {
+    id: number,
+    name: string,
+    image_uri: string,
+    price: number,
+    ar_uri: string,
+    description: string,
+    categoryId: number,
+    sizeType: string,
+}
+
+interface ProductSize {
+    id: number,
+    productId: number,
+    size: number,
+    stock: number,
+    sortOrder: number
+}
+
+export interface CartItems {
+    id: number,
+    userId: number,
+    productId: number,
+    productSizeId: number,
+    quantity: number,
+    size: string,
+    product: Product,
+    productSize: ProductSize
 }
 
 export interface CartResponse {
-  success: boolean;
-  data: {
-    items: CartItem[];
-    total: number;
-    itemCount: number;
-  };
+    success: boolean,
+    data : {
+        items: CartItems[],
+        total: number,
+        itemCount: number
+    }
 }
 
 export interface AddToCartData {

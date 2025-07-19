@@ -115,18 +115,9 @@ const Categories: FC = () => {
                                     name: selectedCategory.name
                                 })}
                             >
-                                <Text style={styles.exploreButtonText}>Explore Products</Text>
+                                <Text style={styles.exploreButtonText}>Explore {selectedCategory.name}</Text>
                             </TouchableOpacity>
 
-                            {/* Fashion Category Special Button */}
-                            {selectedCategory.name.toLowerCase() === 'fashion' && (
-                                <TouchableOpacity 
-                                    style={styles.fashionButton}
-                                    onPress={handleViewFeaturedProduct}
-                                >
-                                    <Text style={styles.fashionButtonText}>View Featured Fashion Item</Text>
-                                </TouchableOpacity>
-                            )}
                         </View>
                     ) : (
                         <View style={styles.centerContent}>

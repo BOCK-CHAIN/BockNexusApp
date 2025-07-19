@@ -1,20 +1,19 @@
 import {View, Text, StyleSheet, Image} from 'react-native'
 import React, { FC } from 'react'
-import UniversalAdd from '@modules/products/atoms/UniversalAdd'
 import { RFValue } from 'react-native-responsive-fontsize'
 
 const OrderItem:FC <{item:any, onUpdate?: () => void}> = ({item, onUpdate}) => {
     return (
         <View style={styles.flexRow}>
             <View style={styles.imageContainer}>
-                <Image source={{uri: item?.image_uri}} style={styles.img} /> 
-                <UniversalAdd item={item} onUpdate={onUpdate} />
+                <Image source={{uri: item.product.image_uri}} style={styles.img} />
             </View>
 
             <View style={styles.itemContainer}>
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemDetails}>₹{item.price} x {item.quantity}</Text>
-                <Text style={styles.itemTotal}>Total: ₹{item.totalPrice}</Text>
+                <Text style={styles.itemName}>{item.product.name}</Text>
+                <Text style={styles.itemName}>Size: {item.size}</Text>
+                <Text style={styles.itemDetails}>₹{item.product.price} x {item.quantity}</Text>
+                <Text style={styles.itemTotal}>Total: ₹{item.quantity*item.product.price}</Text>
             </View>
         </View>
     )

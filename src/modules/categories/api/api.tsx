@@ -2,6 +2,7 @@ import { BASE_URL } from '@store/config';
 import axios from 'axios';
 import { Category } from '../types/redux';
 
+/*
 // Mock data for when API is not available
 const mockCategories: Category[] = [
   {
@@ -145,24 +146,20 @@ const mockCategories: Category[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
 ];
+*/
 
 export const fetchCategoriesData = async (): Promise<Category[]> => {
     try {
         const response = await axios.get(`${BASE_URL}/category`);
         
-        if (!response.data) {
-            throw new Error('No data received from server');
+        if(!response.data || !response.data.data || !Array.isArray(response.data.data)){
+            throw new Error('Invalid response structure from the backend');
         }
-        
-        if (!response.data.categories) {
-            throw new Error('Categories data not found in response');
-        }
-        
-        return response.data.categories;
+
+        return response.data.data;
     } catch (error) {
         console.log('API Error:', error);
-        console.log('Using mock data instead');
-        // Return mock data when API fails
-        return mockCategories;
+        console.log('Using empty array as fallback');
+        return [];
     }
 };

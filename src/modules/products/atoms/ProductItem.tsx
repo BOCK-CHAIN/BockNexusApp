@@ -3,58 +3,57 @@ import React from 'react'
 import { navigate } from '@navigation/NavigationUtil'
 import Icon from '@components/atoms/Icon'
 import { RFValue } from 'react-native-responsive-fontsize'
-import UniversalAdd from './UniversalAdd'
+
 const ProductItem = ({ item, is0dd }: any) => {
     return (
-        <View style={[styles.productCard, { marginRight: is0dd ? 0 : 10 }]}>
-            <View style={styles.imageContainer}>
-                <Image source={{ uri: item?.image_uri }} style={styles.productImage} />
-                {
-                    !item?.ar_uri &&
-                    (
-                        <TouchableOpacity style={styles.button3d} onPress={() => navigate('ARViewer', {
-                            uri: item?.ar_uri
-                        })}>
+            <TouchableOpacity
+                style={[styles.productCard, { marginRight: is0dd ? 0 : 10 }]}
+                onPress ={() => navigate('ProductDetails', { item })}
+            >
+                <View style={styles.imageContainer}>
+                    <Image source={{ uri: item?.image_uri }} style={styles.productImage} />
+                    {
+                        !item?.ar_uri &&
+                        (
+                            <TouchableOpacity style={styles.button3d} onPress={() => navigate('ARViewer', {
+                                uri: item?.ar_uri
+                            })}>
 
-                            <Icon name='cube-scan' iconFamily='MaterialCommunityIcons' size={20} color='#000' />
-                        </TouchableOpacity>
-                    )
-                }
-            </View>
-
-            <View style={{ paddingHorizontal: 10 }} >
-                <Text style={styles.productName} >
-                    {item?.name}
-                </Text>
-                <Text numberOfLines={2} style={styles.productDesc} >
-                    {item?.description}
-                </Text>
-                <Text style={styles.productPrice} >
-                    <Text style={{ textDecorationLine: "line-through", opacity: 0.6 }} >
-                        ₹{item?.price + 599}
-                    </Text>
-                    {" "}₹{item?.price}
-                </Text>
-                <View style={styles.flexRow} >
-                    <View style={styles.hotDealContainer} >
-                        <Text style={styles.hotDealText} >
-                            Hot Deal
-                        </Text>
-                    </View>
-
-                    <UniversalAdd item={item} />
-
-
+                                <Icon name='cube-scan' iconFamily='MaterialCommunityIcons' size={20} color='#000' />
+                            </TouchableOpacity>
+                        )
+                    }
                 </View>
 
-            </View>
-        </View>
+                <View style={{ paddingHorizontal: 10 }} >
+                    <Text style={styles.productName} >
+                        {item?.name}
+                    </Text>
+                    <Text numberOfLines={2} style={styles.productDesc} >
+                        {item?.description}
+                    </Text>
+                    <Text style={styles.productPrice} >
+                        <Text style={{ textDecorationLine: "line-through", opacity: 0.6 }} >
+                            ₹{item?.price + 599}
+                        </Text>
+                        {" "}₹{item?.price}
+                    </Text>
+                    <View style={styles.flexRow} >
+                        <View style={styles.hotDealContainer} >
+                            <Text style={styles.hotDealText} >
+                                Hot Deal
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
     )
 }
+
 const styles = StyleSheet.create({
     productCard: {
         backgroundColor: '#fff',
-        width: '48%',
+        width: '49%',
         overflow: "hidden",
         marginBottom: 10
     },

@@ -2,52 +2,49 @@ import {View, Text, StyleSheet, Platform, TouchableOpacity, ActivityIndicator} f
 import React, { useState } from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { useAppSelector } from '@store/reduxHook'
-import { selectTotalCartPrice } from '../api/slice'
-import LoginModal from '@modules/account/molecules/LoginModal'
+import { navigate } from '@navigation/NavigationUtil'
 
-const PlaceOrderButton = () => {
-    const price = useAppSelector(selectTotalCartPrice)
+const PlaceOrderButton = ({ value }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [loading, setLoading] = useState(false)
+    const platformFee = 4;
+
     return (
         <>
             <View style={styles.container}>
                 <View>
-                    <Text style={styles.strikePrice}>₹{price + 1200}</Text>
-                    <Text style={styles.price}>₹{price}
-                        <Text style={{fontSize: RFValue(10)}}>
-                            {" "}
-                        </Text>
+                    <Text style={styles.strikePrice}>₹{value.total + 1200 + platformFee} </Text>
+                    <Text style={styles.price}>₹{value.total + platformFee}
                     </Text>
                 </View>
 
-                <TouchableOpacity disabled={loading} style={styles.button} onPress={()=>{
-                    setIsVisible(true)
-                }}>{
-                    loading? <ActivityIndicator color='black' size='small' />:
-                    <Text style={styles.btnText}>
-                        Place Order
-                    </Text>
-                }
-
+                <TouchableOpacity
+                    disabled={loading}
+                    style={styles.button}
+                    onPress={() => navigate('AddressChoosing')}
+                >
+                    {loading? <ActivityIndicator color='black' size='small' /> :
+                        <Text style={styles.btnText}> Place Order </Text>
+                    }
                 </TouchableOpacity>
             </View>
-
-            {isVisible && <LoginModal onClose={() => setIsVisible(false)} visible={isVisible} />}
         </>
     )
 }
 
 const styles = StyleSheet.create({
     strikePrice: {
-        fontSize: RFValue(11),
+        fontSize: RFValue(12),
         color: "#888",
-        textDecorationLine: 'line-through'
+        textDecorationLine: 'line-through',
+        marginLeft: 5,
     },
     price: {
-        fontSize: RFValue(16),
+        fontSize: RFValue(18),
         color: '#000',
-        fontWeight: '600'
+        fontWeight: '600',
+        marginBottom: 5,
+        marginLeft: 5,
     },
     button: {
         backgroundColor: '#FFC201',
@@ -73,7 +70,9 @@ const styles = StyleSheet.create({
         paddingBottom: Platform.OS === 'ios' ? 30 : 10,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
+        zIndex: 999
     }
 })
 

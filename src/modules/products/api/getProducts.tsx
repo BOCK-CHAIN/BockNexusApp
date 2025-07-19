@@ -1,6 +1,6 @@
 import { BASE_URL } from "@store/config"
 import axios from "axios"
-
+/*
 // Mock products for Fashion category when API fails
 const mockFashionProducts = [
   {
@@ -120,32 +120,26 @@ const mockElectronicsProducts = [
     category_id: 2
   }
 ];
+*/
 
 export const getProductsByCategory = async (id: string) => {
     try {
         const res = await axios.get(`${BASE_URL}/product/category/${id}`)
-        return res.data.data
-    } catch (error) {
-        console.log('API failed, using mock products for category:', id);
-        
-        // Return mock products based on category ID
-        const categoryId = String(id);
-        if (categoryId === '1') {
-            return mockFashionProducts;
-        } else if (categoryId === '2') {
-            return mockElectronicsProducts;
-        } else {
-            // Return some default products for other categories
-            return [
-                {
-                    id: 201,
-                    name: "Sample Product",
-                    price: 999,
-                    image_uri: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                    description: "Sample product for this category",
-                    category_id: id
-                }
-            ];
+        console.log('API response:', res.data);
+        if(res.data?.success && Array.isArray(res.data.data)){
+            return res.data.data;
         }
+
+        throw new Error('Invalid response format');
+    } catch (error) {
+        console.log(error)
+        return [{
+            id: 201,
+            name: "Sample Product",
+            price: 999,
+            image_uri: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            description: "Sample product for this category",
+            category_id: id
+        }];
     }
 }
