@@ -1,5 +1,8 @@
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import SearchResults from './templates/SearchResults';
 import { View, Text, StyleSheet, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@store/reduxHook'
 import { getHomeContent } from './api/actions'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -9,7 +12,9 @@ import MenuHeader from './molecules/MenuHeader'
 import SearchBar from './molecules/SearchBar'
 import MainList from './templates/MainList'
 
-const Home = () => {
+const Stack = createStackNavigator();
+
+const HomeScreen = () => {
 
     const insets = useSafeAreaInsets()
     const scrollYGlobal = useSharedValue(0)
@@ -41,10 +46,19 @@ const Home = () => {
         </View>
     )
 }
+
+const HomeStack = () => (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="HomeMain" component={HomeScreen} />
+        <Stack.Screen name="SearchResults" component={SearchResults} />
+    </Stack.Navigator>
+);
+
+export default HomeStack;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fff"
     }
 })
-export default Home
