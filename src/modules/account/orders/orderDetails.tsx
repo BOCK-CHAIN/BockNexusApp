@@ -6,9 +6,7 @@ const OrderDetails = ({ route }) => {
     const { order } = route.params;
     const date = new Date(order.deliveryDate).toLocaleDateString();
     const sellers = ['']
-    const handlingFee = 2.00;
-    const platformFee = 1.00;
-    const processingFee = 3.00;
+    const platformFee = 4.00;
     const [randomProducts, setRandomProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -60,7 +58,7 @@ const OrderDetails = ({ route }) => {
         return sum + item.quantity * item.product.price;
     }, 0);
 
-    const finalPrice = totalCost + handlingFee + platformFee + processingFee;
+    const finalPrice = totalCost + platformFee;
 
     return (
         <>
@@ -121,16 +119,8 @@ const OrderDetails = ({ route }) => {
                         <Text style={{ marginLeft: 6, fontSize: 15 }}> ${totalCost.toFixed(2)} </Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 6 }}>
-                        <Text style={{ marginLeft: 6, fontSize: 15 }}> Handling Fee: </Text>
-                        <Text style={{ marginLeft: 6, fontSize: 15 }}> ${handlingFee.toFixed(2)} </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 6 }}>
                         <Text style={{ marginLeft: 6, fontSize: 15 }}> Platform Fee: </Text>
                         <Text style={{ marginLeft: 6, fontSize: 15 }}> ${platformFee.toFixed(2)} </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 6 }}>
-                        <Text style={{ marginLeft: 6, fontSize: 15 }}> Payment Processing Fee: </Text>
-                        <Text style={{ marginLeft: 6, fontSize: 15 }}> ${processingFee.toFixed(2)} </Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 6, borderTopWidth: 1 }}>
                         <Text style={{ marginLeft: 6, fontSize: 16 }}> Final Price: </Text>

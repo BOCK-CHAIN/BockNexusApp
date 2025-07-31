@@ -8,7 +8,6 @@ import { getHomeContent } from './api/actions'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { screenHeight } from '@utils/Constants'
-import MenuHeader from './molecules/MenuHeader'
 import SearchBar from './molecules/SearchBar'
 import MainList from './templates/MainList'
 
@@ -36,7 +35,6 @@ const HomeScreen = () => {
             <View style={{ height: Platform.OS === 'android' ? insets.top : 0 }} />
             <Animated.View style={[moveUpStyle]}>
                 <View>
-                    <MenuHeader scrollY={scrollYGlobal} />
                     <SearchBar/>
                 </View>
             </Animated.View>

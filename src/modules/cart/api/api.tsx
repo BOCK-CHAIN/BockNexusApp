@@ -1,4 +1,5 @@
 import { BASE_URL } from '@store/config';
+import cartEventEmitter from '../../../utils/events.tsx'
 
 interface Product {
     id: number,
@@ -60,10 +61,15 @@ export const addToCart = async (token: string, cartData: AddToCartData): Promise
     body: JSON.stringify(cartData),
   });
 
+
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.message || 'Failed to add item to cart');
   }
+
+  const data = await response.json();
+
+  cartEventEmitter.emit('cartUpdated')
 
   return response.json();
 };
@@ -115,10 +121,13 @@ export const removeFromCart = async (token: string, cartItemId: number): Promise
     },
   });
 
+
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.message || 'Failed to remove item from cart');
   }
+
+  cartEventEmitter.emit('cartUpdated')
 
   return response.json();
 };
@@ -138,5 +147,30 @@ export const clearCart = async (token: string): Promise<{ success: boolean; mess
     throw new Error(errorData.message || 'Failed to clear cart');
   }
 
+  cartEventEmitter.emit('cartUpdated')
   return response.json();
-}; 
+};
+
+export const placeOrder = async ({ userId, addressId, paymentMode = "COD" }) => {
+    const res = await fetch(`${BASE_URL}/checkout`, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify({
+            userId,
+            addressId,
+            paymentMode
+        }),
+    });
+
+    const data = await res.json();
+
+    if(!res.ok){
+        throw new Error(data.message || 'Failed to place order')
+    }
+
+    cartEventEmitter.emit('cartUpdated')
+
+    return data;
+}
