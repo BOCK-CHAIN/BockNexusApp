@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Alert,
-  Image
+  Image,
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { FONTS } from '@utils/Constants';
@@ -29,14 +29,14 @@ const Account: FC = () => {
       'Are you sure you want to logout?',
       [
         { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Logout', 
+        {
+          text: 'Logout',
           style: 'destructive',
           onPress: () => {
             dispatch(logout());
             Alert.alert('Success', 'Logged out successfully');
-          }
-        }
+          },
+        },
       ]
     );
   };
@@ -57,7 +57,7 @@ const Account: FC = () => {
     <View style={styles.container}>
       <SafeAreaView />
 
-      <ScrollView style={styles.content} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.growCenter}>
         {isAuthenticated && user ? (
           // Logged in user view
           <View style={styles.userSection}>
@@ -77,25 +77,25 @@ const Account: FC = () => {
             </View>
 
             <View style={styles.menuSection}>
-              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account',{ screen: 'EditProfile' })}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('EditProfile')}>
                 <Icon name="person" size={24} color="#333" />
                 <Text style={styles.menuText}>Edit Profile</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account',{ screen: 'Orders' })}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Orders')}>
                 <Icon name="shopping-cart" size={24} color="#333" />
                 <Text style={styles.menuText}>My Orders</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account', { screen: 'Wishlist' })}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Wishlist')}>
                 <Icon name="favorite" size={24} color="#333" />
                 <Text style={styles.menuText}>Wishlist</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Account', { screen: 'Addresses' })}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Addresses')}>
                 <Icon name="location-on" size={24} color="#333" />
                 <Text style={styles.menuText}>Addresses</Text>
                 <Icon name="chevron-right" size={24} color="#666" />
@@ -119,13 +119,13 @@ const Account: FC = () => {
             <View style={styles.loginContent}>
               <Image
                 source={require('../../assets/images/R.png')}
-                style={{ height: 100, width: 100 }}
+                style={styles.avatarImage}
               />
               <Text style={styles.loginTitle}>Welcome to BockNexus</Text>
               <Text style={styles.loginSubtitle}>
                 Login/Register to access your account and manage your orders
               </Text>
-              
+
               <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
                 <Text style={styles.loginButtonText}>Login / Register</Text>
               </TouchableOpacity>
@@ -134,9 +134,9 @@ const Account: FC = () => {
         )}
       </ScrollView>
 
-      <LoginModal 
-        visible={showLoginModal} 
-        onClose={() => setShowLoginModal(false)} 
+      <LoginModal
+        visible={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
       />
     </View>
   );
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     color: '#333',
     marginTop: 20,
     marginBottom: 10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   loginSubtitle: {
     fontSize: RFValue(14),
@@ -282,6 +282,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: RFValue(16),
     fontWeight: 'bold',
+  },
+  growCenter: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  avatarImage: {
+    height: 100,
+    width: 100,
   },
 });
 
