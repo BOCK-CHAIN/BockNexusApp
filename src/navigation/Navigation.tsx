@@ -9,6 +9,7 @@ import Products from '@modules/products'
 import Cart from '@modules/cart'
 import ProductDetails from '@modules/products/atoms/productDetails'
 import AddressChoosing from '@modules/cart/atoms/addressChoosing'
+import PaymentPage from '@modules/cart/atoms/paymentPage'
 
 const Stack = createNativeStackNavigator()
 
@@ -27,6 +28,7 @@ const Navigation: FC = () => {
                 <Stack.Screen name='Cart' component={Cart} />
                 <Stack.Screen name='ProductDetails' component={ProductDetails} />
                 <Stack.Screen name='AddressChoosing' component={AddressChoosing} />
+                <Stack.Screen name='PaymentPage' component={PaymentPage} />
 
             </Stack.Navigator>
         </NavigationContainer>

@@ -7,6 +7,9 @@ import { FONTS } from '@utils/Constants'
 import { navigate } from '@navigation/NavigationUtil'
 import { RootState } from '@store/store'
 import { Category } from './types/redux'
+import cartEventEmitter from '../../utils/events'
+import { useFocusEffect } from '@react-navigation/native'
+import { useCallback } from 'react'
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -15,6 +18,12 @@ const Categories: FC = () => {
     const { data, loading, error } = useAppSelector((state: RootState) => state.categories)
     const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
     const [showProductPreview, setShowProductPreview] = useState(false)
+
+    useFocusEffect(
+        useCallback(() => {
+            cartEventEmitter.emit('cartUpdated')
+        }, [])
+    )
 
     // Mock product data for Fashion category
     const fashionProduct = {

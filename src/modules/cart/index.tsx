@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
         marginBottom: 6,
     },
     cartDivider: {
-        borderBottomWidth: 1,
+        borderBottomWidth: 3,
         borderColor: '#E5E7EB'
     },
     cartHeaderContainer: {

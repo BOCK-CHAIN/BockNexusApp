@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Image } fr
 import { RFValue } from 'react-native-responsive-fontsize'
 import { getUserAddress } from '@modules/account/api/addressApi';
 import { useSelector } from 'react-redux';
+import { navigate } from '@navigation/NavigationUtil'
 
 const AddressChoosing = () => {
     const token = useSelector((state) => state.auth.token);
@@ -37,49 +38,59 @@ const AddressChoosing = () => {
 
     return (
         <>
-            <View>
-                <Text style={styles.title}> Choose an address: </Text>
-                <Text style={styles.subTitle}> All addresses: </Text>
-            </View>
-            <View>
-                {addresses.map((address) =>  (
-                    <TouchableOpacity
-                        key={address.id}
-                        style={styles.defaultContainer}
-                        onPress={() => setSelectedAddress(address.id)}
-                    >
-                        <View style={[styles.boxContent, selectedAddress === address.id  && styles.selectedBox]}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                {address.isDefault && (
+            <View style={styles.container}>
+                <View>
+                    <Text style={styles.title}> Choose an address: </Text>
+                    <Text style={styles.subTitle}> All addresses: </Text>
+                </View>
+                <View>
+                    {addresses.map((address) =>  (
+                        <TouchableOpacity
+                            key={address.id}
+                            style={styles.defaultContainer}
+                            onPress={() => setSelectedAddress(address.id)}
+                        >
+                            <View style={[styles.boxContent, selectedAddress === address.id  && styles.selectedBox]}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    {address.isDefault && (
+                                        <Image
+                                            source = {require('../../../assets/images/defaultAddress.png')}
+                                            style={{ width: 25, height: 25 }}
+                                        />
+                                    )}
+                                    <Text style={{ fontSize: 22, fontWeight: 400 }}> {address.nickname} </Text>
                                     <Image
-                                        source = {require('../../../assets/images/defaultAddress.png')}
+                                        source = {
+                                            address.type === 'Home'
+                                            ? require('../../../assets/images/home.png')
+                                            : address.type === 'Office'
+                                            ? require('../../../assets/images/office.png')
+                                            : require('../../../assets/images/location.png')
+                                        }
                                         style={{ width: 25, height: 25 }}
                                     />
-                                )}
-                                <Text style={{ fontSize: 22, fontWeight: 400 }}> {address.nickname} </Text>
-                                <Image
-                                    source = {
-                                        address.type === 'Home'
-                                        ? require('../../../assets/images/home.png')
-                                        : address.type === 'Office'
-                                        ? require('../../../assets/images/office.png')
-                                        : require('../../../assets/images/location.png')
-                                    }
-                                    style={{ width: 25, height: 25 }}
-                                />
+                                </View>
+                                <View style={{ marginTop: 10 }}>
+                                    <Text style={[styles.info, { fontSize:18 }]}> {address.receiverName} </Text>
+                                    <Text style={styles.info}> {address.line1}, </Text>
+                                    {address.line2 && (
+                                        <Text style={styles.info}> {address.line2}, </Text>
+                                    )}
+                                    <Text style={styles.info}> {address.city}, {address.state} </Text>
+                                    <Text style={styles.info}> {address.zip} </Text>
+                                </View>
                             </View>
-                            <View style={{ marginTop: 10 }}>
-                                <Text style={[styles.info, { fontSize:18 }]}> {address.receiverName} </Text>
-                                <Text style={styles.info}> {address.line1}, </Text>
-                                {address.line2 && (
-                                    <Text style={styles.info}> {address.line2}, </Text>
-                                )}
-                                <Text style={styles.info}> {address.city}, {address.state} </Text>
-                                <Text style={styles.info}> {address.zip} </Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                ))}
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            </View>
+            <View style={styles.footer}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigate('PaymentPage', { selectedAddress })}
+                >
+                    <Text style={styles.btnText}>Payment Page</Text>
+                </TouchableOpacity>
             </View>
             {loading && (
                 <View style={styles.loaderContainer}>
@@ -91,6 +102,9 @@ const AddressChoosing = () => {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     title: {
         fontSize: RFValue(20),
         padding: 12,
@@ -134,7 +148,26 @@ const styles = StyleSheet.create({
         borderColor: 'blue',
         borderWidth: 2,
         backgroundColor: '#e6f0ff'
-    }
+    },
+    footer: {
+        backgroundColor: 'white',
+        alignItems: 'flex-end',
+        padding: 18,
+    },
+    button: {
+        backgroundColor: '#914294',
+        padding: 10,
+        borderRadius: 6,
+        width: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20
+    },
+    btnText: {
+        color: '#222',
+        fontWeight: "600",
+        fontSize: RFValue(13)
+    },
 })
 
 export default AddressChoosing;
