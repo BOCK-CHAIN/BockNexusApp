@@ -10,7 +10,7 @@ import { useAppSelector } from '@store/reduxHook'
 import { selectTotalItemsInCart } from '@modules/cart/api/slice'
 import { Picker } from '@react-native-picker/picker'
 import axios from 'axios'
-
+import Slider from '@react-native-community/slider';
 
 const Products: FC = () => {
     const route = useRoute()
@@ -209,6 +209,24 @@ const Products: FC = () => {
                                 {availableColors.map(c => <Picker.Item key={c} label={c} value={c} />)}
                             </Picker>
                         </View>
+                            {/* Price Range Slider */}
+                            <Text style={{ fontSize: 15, color: '#222', marginBottom: 4 }}>Price Range</Text>
+                            <Slider
+                            style={{ width: '100%', height: 40 }}
+                            minimumValue={0}
+                            maximumValue={10000}
+                            step={100}
+                            minimumTrackTintColor="#7B1FA2"
+                            maximumTrackTintColor="#ddd"
+                            thumbTintColor="#fff"
+                            value={Number(filter.maxPrice) || 10000}
+                            onValueChange={(value) => setFilter(f => ({ ...f, maxPrice: value.toString() }))}
+                            />
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={{ color: '#555', fontSize: 13 }}>Min: ₹0</Text>
+                            <Text style={{ color: '#555', fontSize: 13 }}>Max: ₹{filter.maxPrice || '10000'}</Text>
+                        </View>
+
 
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
                             <TouchableOpacity

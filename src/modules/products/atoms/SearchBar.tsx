@@ -2,10 +2,23 @@ import { View, Text, StyleSheet, Pressable, TextInput, Image } from 'react-nativ
 import React, { FC } from 'react'
 import Icon from '@components/atoms/Icon';
 import { goBack, navigate } from '@navigation/NavigationUtil';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 interface SearchBarProps {
     cartLength: number;
 }
+
+const WishlistButton = () => {
+    const navigation = useNavigation();
+
+    return (
+        <TouchableOpacity onPress={() => navigation.navigate('Wishlist' as never)}>
+            <Ionicons name="heart-outline" size={24} color="#000" />
+        </TouchableOpacity>
+    );
+};
 
 const SearchBar: FC<SearchBarProps> = ({ cartLength }) => {
     return (
@@ -21,7 +34,9 @@ const SearchBar: FC<SearchBarProps> = ({ cartLength }) => {
                     placeholderTextColor={"#666"}
                 />
             </View>
-            <Icon size={24} name='heart-outline' iconFamily='Ionicons' color='#000' />
+            
+            <WishlistButton />
+
             <Pressable onPress={()=>navigate('Cart')} >
                 <Image
                     source={require('../../../assets/images/cart.png')}
