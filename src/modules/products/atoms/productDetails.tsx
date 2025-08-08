@@ -117,30 +117,6 @@ const ProductDetails = () => {
         }
     };
 
-    const mockReviews = [
-        {
-            id: 1,
-            rating: 5,
-            comment: 'Amazing quality! The fabric is so soft and comfortable.',
-            user: { phone: '+1234567890' },
-            createdAt: '2024-01-15T10:30:00Z',
-        },
-        {
-            id: 2,
-            rating: 4,
-            comment: 'Great fit and excellent value for money. Highly recommend!',
-            user: { phone: '+1234567891' },
-            createdAt: '2024-01-14T15:45:00Z',
-        },
-        {
-            id: 3,
-            rating: 5,
-            comment: 'Perfect for everyday wear. Very satisfied with the purchase.',
-            user: { phone: '+1234567892' },
-            createdAt: '2024-01-13T09:20:00Z',
-        },
-    ]
-
     const sizeChart = {
         XS: { chest: '32-34', length: '26', sleeve: '7' },
         S: { chest: '34-36', length: '27', sleeve: '7.5' },
@@ -211,8 +187,9 @@ const ProductDetails = () => {
                     {new Date(item.createdAt).toLocaleDateString()}
                 </Text>
             </View>
-            <Text style={styles.reviewComment}>{item.comment}</Text>
+            <Text style={styles.reviewUser}>{item.user.username}</Text>
             <Text style={styles.reviewUser}>{item.user.phone.replace(/(\d{3})(\d{3})(\d{4})/, '***-***-$3')}</Text>
+            <Text style={styles.reviewComment}>{item.comment}</Text>
         </View>
     );
 
@@ -253,8 +230,8 @@ const ProductDetails = () => {
         </View>
     );
 
-    const averageRating = mockReviews.length > 0
-    ? mockReviews.reduce((sum, review) => sum + review.rating, 0) / mockReviews.length : 0;
+    const averageRating = item.reviews.length > 0
+    ? item.reviews.reduce((sum, review) => sum + review.rating, 0) / item.reviews.length : 0;
 
     return (
         <View style={styles.container}>
@@ -296,26 +273,30 @@ const ProductDetails = () => {
                 <View style={{ marginLeft: 15 }}>
                     {/* Product Info */}
                     <View style={styles.productInfo}>
+                        <Text style={styles.brandName}>{item.brand}</Text>
                         <Text style={styles.productName}>{item.name}</Text>
                         <Text style={styles.productPrice}>₹{item.price.toFixed(2)}</Text>
                     </View>
 
                     {/* Rating */}
-                    <View style={styles.ratingSection}>
-                        <View style={styles.ratingContainer}>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <Icon
-                                    key={star}
-                                    name="star"
-                                    size={20}
-                                    color={star <= averageRating ? "#FFD700" : "#E0E0E0"}
-                                />
-                            ))}
+                    {item.reviews.length === 0 ?
+                        null :
+                        <View style={styles.ratingSection}>
+                            <View style={styles.ratingContainer}>
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <Icon
+                                        key={star}
+                                        name="star"
+                                        size={20}
+                                        color={star <= averageRating ? "#FFD700" : "#E0E0E0"}
+                                    />
+                                ))}
+                            </View>
+                            <Text style={styles.ratingText}>
+                            {averageRating.toFixed(1)} ({item.reviews.length} reviews)
+                            </Text>
                         </View>
-                        <Text style={styles.ratingText}>
-                        {averageRating.toFixed(1)} ({mockReviews.length} reviews)
-                        </Text>
-                    </View>
+                    }
 
                     {/* Description */}
                     <Text style={styles.sectionTitle}>Description</Text>
@@ -381,16 +362,25 @@ const ProductDetails = () => {
                     </View>
 
                     {/* Reviews Section */}
-                    <View style={styles.reviewsSection}>
-                        <Text style={styles.sectionTitle}>Reviews ({mockReviews.length})</Text>
-                        <FlatList
-                            data={mockReviews}
-                            renderItem={renderReview}
-                            keyExtractor={(item) => item.id.toString()}
-                            scrollEnabled={false}
-                            ItemSeparatorComponent={() => <View style={styles.reviewSeparator} />}
-                        />
-                    </View>
+                    {item.reviews.length === 0 ? (
+                        <>
+                            <Text style={styles.sectionTitle}>No Reviews Yet</Text>
+                            <View style={styles.noReviews}>
+                                <Text style={styles.noReviewsText}>Be the first to buy it and review it!</Text>
+                            </View>
+                        </>
+                    ) :
+                        <View style={styles.reviewsSection}>
+                            <Text style={styles.sectionTitle}>Reviews ({item.reviews.length})</Text>
+                            <FlatList
+                                data={item.reviews}
+                                renderItem={renderReview}
+                                keyExtractor={(item) => item.id.toString()}
+                                scrollEnabled={false}
+                                ItemSeparatorComponent={() => <View style={styles.reviewSeparator} />}
+                            />
+                        </View>
+                }
                 </View>
             </ScrollView>
             {/* Bottom Action Buttons */}
@@ -480,11 +470,17 @@ const styles = StyleSheet.create({
         padding: 8,
     },
     productName: {
-        fontSize: RFValue(24),
+        fontSize: RFValue(18),
         fontFamily: FONTS.heading,
-        fontWeight: 'bold',
+        fontWeight: '600',
         color: '#333',
         marginBottom: 10,
+    },
+    brandName: {
+        fontSize: RFValue(20),
+        fontFamily: FONTS.heading,
+        fontWeight: '700',
+        color: '#333',
     },
     productPrice: {
         fontSize: RFValue(20),
@@ -722,6 +718,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(255,255,255,0.5)',
         zIndex: 10,
+    },
+    noReviews: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
+        backgroundColor: '#F9F9F9',  // light soft grey
+        elevation: 2,
+        borderRadius: 10,
+        marginRight: 15,
+        borderWidth: 1,
+        borderColor: '#E0E0E0',  // soft border
+        paddingVertical: 20,
+        paddingHorizontal: 15,
+    },
+    noReviewsText: {
+        fontSize: RFValue(14),
+        fontStyle: 'italic',
+        color: '#666',
+        textAlign: 'center',
+        lineHeight: 22,
     },
     wishlistSection: {
         marginTop: 20,

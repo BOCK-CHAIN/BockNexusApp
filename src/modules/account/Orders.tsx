@@ -4,7 +4,6 @@ import { getUserOrders } from './api/orderApi'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
 
-
 const Order = () => {
     const navigation = useNavigation();
     const token = useSelector((state) => state.auth.token);
@@ -14,13 +13,13 @@ const Order = () => {
 
     useEffect(() => {
         const fetchOrders = async () => {
-            try{
+            try {
                 setLoading(true);
                 const data = await getUserOrders(token);
                 setOrders(data);
-            }catch(err){
+            } catch (err) {
                 Alert.alert('Error', err.message);
-            }finally{
+            } finally {
                 setLoading(false);
             }
         }
@@ -36,137 +35,193 @@ const Order = () => {
         );
     }
 
-    return(
-        <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
-            <View style={[styles.header, { marginBottom: 2 }]}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <View style={styles.searchFilterRow}>
                     <TextInput
                         placeholder='🔍 Search for your order'
                         onChangeText={setSearch}
-                        placeholderTextColor='black'
+                        placeholderTextColor='gray'
                         style={styles.searchBar}
                     />
                     <TouchableOpacity style={styles.filter}>
                         <Image
                             source={require('../../assets/images/filters.png')}
-                            style = {{ width: 35, height: 35 }}
+                            style={styles.filterIcon}
                         />
-                        <Text style={{ fontSize: 19 }}> Filters </Text>
+                        <Text style={styles.filterText}>Filters</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.heading}> Your Orders: </Text>
+                <Text style={styles.heading}>Your Orders:</Text>
             </View>
 
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            {orders.length === 0 ? (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, fontWeight: 500 }}> You have no orders yet! </Text>
-                </View>
-            ) : (
-                orders.map((order) => {
-                    const dateObj = new Date(order.deliveryDate);
-                    const day = dateObj.getDate();
-                    const month = dateObj.toLocaleDateString('en-US', { month: 'long' });
-                    const year = dateObj.getFullYear();
-                    const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+            <ScrollView contentContainerStyle={styles.scrollContent}>
+                {orders.length === 0 ? (
+                    <View style={styles.emptyState}>
+                        <Text style={styles.emptyText}>You have no orders yet!</Text>
+                    </View>
+                ) : (
+                    orders.map((order) => {
+                        const dateObj = new Date(order.deliveryDate);
+                        const day = dateObj.getDate();
+                        const month = dateObj.toLocaleDateString('en-US', { month: 'long' });
+                        const year = dateObj.getFullYear();
+                        const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
 
-                    let bgColor;
-                    let deliveryText;
-                    switch (order.status) {
-                        case 'CANCELLED':
-                            bgColor = '#C0392B';
-                            deliveryText = 'Order was cancelled.'
-                            break;
-                        default:
-                            bgColor = 'white';
-                            deliveryText = `Expected Delivery: ${weekday}, ${day} ${month} ${year}`
-                    }
+                        let bgColor;
+                        let deliveryText;
+                        switch (order.status) {
+                            case 'CANCELLED':
+                                bgColor = '#ffe6e6';
+                                deliveryText = 'Order was cancelled.';
+                                break;
+                            default:
+                                bgColor = '#ffffff';
+                                deliveryText = `Expected Delivery: ${weekday}, ${day} ${month} ${year}`;
+                        }
 
-                    return (
-                        <TouchableOpacity key={order.id} onPress={() => navigation.navigate('OrderDetails', { order })}>
-                            <View style={[styles.box, { backgroundColor: bgColor }]}>
-                                <Image
-                                    source = {require('../../assets/images/dummy.png')}
-                                    style={{ width: 50, height: 50, marginRight: 10, }}
-                                />
-                                <View style={{ flex: 1, }}>
-                                    <Text style={styles.info}>
-                                        {deliveryText}
-                                    </Text>
-                                    <Text numberOfLines={1} style={{ flexShrink: 1, fontSize: 15 }}>
-                                        {order.items.map((item, idx) => (
-                                            `${item.product.name}${idx < order.items.length - 1 ? ', ': ''}`
-                                        )).join('')}
-                                    </Text>
+                        return (
+                            <TouchableOpacity key={order.id} onPress={() => navigation.navigate('OrderDetails', { order })}>
+                                <View style={[styles.orderCard, { backgroundColor: bgColor }]}>
+                                    <Image
+                                        source={require('../../assets/images/dummy.png')}
+                                        style={styles.orderImage}
+                                    />
+                                    <View style={styles.orderDetails}>
+                                        <Text style={styles.deliveryText}>{deliveryText}</Text>
+                                        <Text numberOfLines={1} style={styles.itemNames}>
+                                            {order.items.map((item, idx) => (
+                                                `${item.product.name}${idx < order.items.length - 1 ? ', ' : ''}`
+                                            )).join('')}
+                                        </Text>
+                                    </View>
+                                    <Image
+                                        source={require('../../assets/images/arrow.png')}
+                                        style={styles.arrowIcon}
+                                    />
                                 </View>
-                                <Image
-                                    source = {require('../../assets/images/arrow.png')}
-                                    style={{ width: 12, height: 12, marginLeft: 10, marginTop: 18 }}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    );
-                })
-            )}
+                            </TouchableOpacity>
+                        );
+                    })
+                )}
             </ScrollView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    heading: {
-        marginLeft: 10,
-        marginTop: 8,
-        fontSize: 26,
-        fontWeight: '700',
-        fontFamily: 'Tinos-Bold',
-        color: '#212121',
-    },
-    box: {
-        flexDirection: 'row',
-        padding: 16,
-        borderWidth: 3,
-        borderColor: '#ddd',
-       // marginHorizontal: -12,
-        /*elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,*/
-    },
-    info: {
-        fontSize: 14,
-        color: '#131313',
-        marginBottom: 4,
-        fontWeight: 500,
-    },
-    searchBar: {
-       marginLeft: 12,
-       marginTop: 12,
-       borderWidth: 1,
-       width: '65%',
-       borderRadius: 5,
-    },
-    filter: {
+    container: {
         flex: 1,
-        flexDirection: 'row',
-        width: '25%',
-        marginLeft: 15,
-        marginTop: 12,
-        marginRight: 12,
-        justifyContent: 'center',
-        alignItems: 'center'
+        backgroundColor: '#FAFAFA',
     },
     loaderContainer: {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#fff',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
     },
     header: {
         borderBottomWidth: 2,
         borderColor: '#914294',
-    }
+        paddingHorizontal: 12,
+        paddingBottom: 10,
+        paddingTop: 12,
+        backgroundColor: '#fff',
+    },
+    searchFilterRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    searchBar: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        fontSize: 14,
+        marginRight: 10,
+        backgroundColor: '#fff',
+    },
+    filter: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f0e6f5',
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 8,
+    },
+    filterIcon: {
+        width: 20,
+        height: 20,
+        marginRight: 6,
+    },
+    filterText: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: '#914294',
+    },
+    heading: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#212121',
+        fontFamily: 'Tinos-Bold',
+    },
+    scrollContent: {
+        paddingHorizontal: 12,
+        paddingTop: 6,
+        paddingBottom: 20,
+    },
+    emptyState: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 50,
+    },
+    emptyText: {
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#555',
+    },
+    orderCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 14,
+        marginBottom: 12,
+        borderRadius: 12,
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#e0d3ea',
+    },
+    orderImage: {
+        width: 55,
+        height: 55,
+        marginRight: 12,
+        borderRadius: 8,
+    },
+    orderDetails: {
+        flex: 1,
+    },
+    deliveryText: {
+        fontSize: 14,
+        color: '#333',
+        marginBottom: 4,
+        fontWeight: '600',
+    },
+    itemNames: {
+        fontSize: 14,
+        color: '#555',
+        flexShrink: 1,
+    },
+    arrowIcon: {
+        width: 16,
+        height: 16,
+        marginLeft: 10,
+        tintColor: '#555',
+    },
 });
 
 export default Order;
