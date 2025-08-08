@@ -7,6 +7,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { FONTS } from '@utils/Constants';
 import { useSelector } from 'react-redux';
 import { AddToCart } from '../api/addToCart';
+import { addToWishlist } from '@modules/wishlist/api/wishlistApi';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -25,6 +26,7 @@ const ProductDetails = () => {
     const [selectedSize, setSelectedSize] = useState<ProductSize | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [addingToCart, setAddingToCart] = useState(false);
+    const [addingToWishlist, setAddingToWishlist] = useState(false);
     const [loading, setLoading] = useState(false);
     const user = useSelector((state) =>  state.auth.user);
     const token = useSelector((state) => state.auth.token);
@@ -63,6 +65,41 @@ const ProductDetails = () => {
         }
 
         setAddingToCart(false);
+    };
+
+    // Handling Adding to wishlist
+    const addToWishlistHandler = async () => {
+        if(!token || !user){
+            Alert.alert('Please log in first!');
+            return;
+        }
+
+        if(!selectedSize && item.sizeType !== 'NONE' && item.sizeType !== 'ONE_SIZE' ){
+            Alert.alert('Please select a size to continue');
+            return;
+        }
+
+        setAddingToWishlist(true);
+
+        try{
+            const response = await addToWishlist(token, {
+                productId: item.id,
+                productSizeId: selectedSize?.id ?? null,
+                quantity: quantity,
+                size: selectedSize?.size ?? null
+            });
+
+            if(response.success){
+                Alert.alert('Success', 'Item added to wishlist');
+            }else{
+                Alert.alert('Failed!', response.error || 'Failed to add item to wishlist');
+            }
+        }catch(err){
+            console.error(err);
+            Alert.alert('Error', 'Something went wrong while adding to wishlist!');
+        }
+
+        setAddingToWishlist(false);
     };
 
     const handleAddQuantity = async () => {
@@ -304,6 +341,24 @@ const ProductDetails = () => {
                                 <Icon name="add" size={20} color="#333" />
                             </TouchableOpacity>
                         </View>
+                    </View>
+
+                    {/* Wishlist Button */}
+                    <View style={styles.wishlistSection}>
+                        <TouchableOpacity
+                            style={styles.wishlistButton}
+                            onPress={addToWishlistHandler}
+                            disabled={addingToWishlist}
+                        >
+                            {addingToWishlist ? (
+                                <ActivityIndicator color="#fff" size="small" />
+                            ) : (
+                                <>
+                                    <Icon name="favorite" size={20} color="#fff" />
+                                    <Text style={styles.wishlistButtonText}>Add to Wishlist</Text>
+                                </>
+                            )}
+                        </TouchableOpacity>
                     </View>
 
                     {/* Reviews Section */}
@@ -684,6 +739,24 @@ const styles = StyleSheet.create({
         color: '#666',
         textAlign: 'center',
         lineHeight: 22,
+    },
+    wishlistSection: {
+        marginTop: 20,
+    },
+    wishlistButton: {
+        backgroundColor: '#7B1FA2',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 15,
+        borderRadius: 10,
+        marginHorizontal: 5,
+    },
+    wishlistButtonText: {
+        color: '#fff',
+        fontSize: RFValue(16),
+        fontWeight: 'bold',
+        marginLeft: 8,
     },
 })
 

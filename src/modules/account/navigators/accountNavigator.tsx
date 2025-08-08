@@ -5,7 +5,7 @@ import EditProfile from '../EditProfile';
 import Order from '../Orders';
 import OrderDetails from '../orders/orderDetails'
 import Addresses from '../Addresses'
-import ViewWishlist from '../Wishlist'
+import Wishlist from '@modules/wishlist'
 import SettingsNavigator from './settingNavigator'
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +19,7 @@ const AccountNavigator = () => {
             <Stack.Screen name = "OrderDetails" component={OrderDetails} options={{ title: 'Order Details' }} />
             <Stack.Screen name = "Addresses" component={Addresses} options={{ title: 'Addresses' }} />
             <Stack.Screen name = "SettingsStack" component={SettingsNavigator} options={{ headerShown: false }}/>
-            <Stack.Screen name = "Wishlist" component={ViewWishlist} options = {{ title: 'Wishlist' }} />
+            <Stack.Screen name = "Wishlist" component={Wishlist} options = {{ title: 'Wishlist' }} />
         </Stack.Navigator>
     );
 };

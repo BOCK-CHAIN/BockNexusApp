@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Text, View } from 'react-native'
 import { useAppSelector } from '@store/reduxHook'
 import { useFocusEffect } from '@react-navigation/native'
-import cartEventEmitter from '../utils/events.tsx'
+import cartEventEmitter from '../utils/events'
 import { getUserCart } from '../modules/cart/api/api'
 
 interface TabIconProps {
