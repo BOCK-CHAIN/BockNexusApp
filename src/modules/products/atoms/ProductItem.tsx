@@ -26,6 +26,11 @@ const ProductItem = ({ item, is0dd }: any) => {
                 </View>
 
                 <View style={{ paddingHorizontal: 10 }} >
+                    {item.brand === null ? <View style={{ marginTop: 5 }}/> :
+                        <Text style={styles.brandName} >
+                            {item?.brand}
+                        </Text>
+                    }
                     <Text style={styles.productName} >
                         {item?.name}
                     </Text>
@@ -79,7 +84,11 @@ const styles = StyleSheet.create({
     },
     productName: {
         fontSize: RFValue(10),
-        marginTop: 10,
+    },
+    brandName: {
+        fontSize: RFValue(14),
+        marginTop: 6,
+        marginBottom: 2,
     },
     productDesc: {
         fontSize: RFValue(9),
