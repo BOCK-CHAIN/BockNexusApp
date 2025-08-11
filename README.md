@@ -62,6 +62,9 @@ If everything is set up correctly, you should see your new app running in the An
 
 This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
+This is connected to the backend through the various RESTful APIs that we have implemented, the backend handles all of the server side logic from logging in all the way to placing orders.
+The API calls are in the respective folders of each subpart of the application location in the "api.tsx" files.
+
 ## Step 3: Modify your app
 
 Now that you have successfully run the app, let's make changes!
