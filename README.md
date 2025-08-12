@@ -76,6 +76,50 @@ When you want to forcefully reload, for example to reset the state of your app, 
 - **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
 - **iOS**: Press <kbd>R</kbd> in iOS Simulator.
 
+## 📊 Admin Frontend
+
+The project includes a **BockNexus Admin Frontend** (built with [React Admin](https://marmelab.com/react-admin/)) for managing **products** and **categories**.
+
+### **Key Features**
+- Create, read, update, and delete **products** and **categories**
+- **Purple theme** matching the main app
+- **Responsive design** for desktop & tablet
+- Works with backend **AdminJS REST endpoints**
+
+---
+
+### 🚀 Running the Admin Frontend
+
+#### 1. Navigate to the admin folder
+```
+cd admin-frontend
+```
+
+#### 2. Install dependencies
+```
+npm install
+```
+
+#### 3. Configure backend API URL  
+Edit `src/dataProvider.ts`:
+```
+const API_URL = 'http://localhost:3000'; // Change to your backend URL
+```
+
+#### 4. Start the development server
+```
+npm start
+```
+
+The admin panel will be available at:  
+```
+http://localhost:3000
+```
+
+---
+
+📄 **For more details** (customization, troubleshooting, deployment), see the `README.md` in `admin-frontend`.
+
 ## Congratulations! :tada:
 
 You've successfully run and modified your React Native App. :partying_face:
